@@ -1,6 +1,7 @@
 package com.udemycourse.springboot.event_lab5.Controller;
 
 
+import com.udemycourse.springboot.event_lab5.ApiResponse.ApiResponse;
 import com.udemycourse.springboot.event_lab5.Model.Event;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,33 +22,33 @@ public class EventController {
 
  // 2 endpoint post
     @PostMapping("/add")
-    public String addEvent(@RequestBody Event event) {
+    public ApiResponse addEvent(@RequestBody Event event) {
         events.add(event);
-        return "Event added successfully";
+        return new ApiResponse("Event added successfully");
     }
 
 
  // 3 endpoint put
  @PutMapping("/update/{index}")
- public String updateEvent(@PathVariable int index, @RequestBody Event event) {
+ public ApiResponse updateEvent(@PathVariable int index, @RequestBody Event event) {
      events.set(index, event);
-     return "Event updated successfully";
+     return new ApiResponse("Event updated successfully");
  }
 
 
  // 4 endpoint delete
  @DeleteMapping("/delete/{index}")
- public String deleteEvent(@PathVariable int index) {
+ public ApiResponse deleteEvent(@PathVariable int index) {
      events.remove(index);
-     return "Event deleted successfully";
+     return new ApiResponse("Event deleted successfully");
  }
 
 
  // 5 endpoint change capacity
     @PutMapping("/change-capacity/{index}/{capacity}")
-    public String changeCapacity(@PathVariable int index, @PathVariable int capacity) {
+    public ApiResponse changeCapacity(@PathVariable int index, @PathVariable int capacity) {
         events.get(index).setCapacity(capacity);
-        return "Capacity updated successfully";
+        return new ApiResponse("Capacity updated successfully");
     }
 
 
@@ -65,6 +66,7 @@ public class EventController {
 
 
  // 7 Hint
+ @GetMapping("/date")
    public ArrayList<Event> getEventsByDate(@RequestParam String start, @RequestParam String end) {
        ArrayList<Event> result = new ArrayList<>();
        for (Event e : events) {
